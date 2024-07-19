@@ -1,6 +1,8 @@
-﻿namespace MovieReviewer.Api.Entities
+﻿using MovieReviewer.Api.Entities.Utilities;
+
+namespace MovieReviewer.Api.Entities
 {
-    public class Review
+    public class Review : BaseEntity
     {
         public required string ReviewContent { get; set; }
         public int ReviewScore { get; set; }
