@@ -10,4 +10,10 @@ namespace MovieReviewer.Api.Boundary.Models
         public Language MovieLanguage { get; set; }
         public required double ImdbRating { get; set; }
     }
+    
+    public class MovieViewModel : MovieUpdateModel
+    {
+        public int Id { get; set; }
+        public required string ImdbId { get; set; }
+    }
 }
