@@ -41,12 +41,12 @@ builder.Services.AddAuthentication(options =>
         options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuerSigningKey = false,
+            ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(key),
             ValidateIssuer = false,
             ValidateAudience = false,
             RequireExpirationTime = false,
-            ValidateLifetime = false
+            ValidateLifetime = true
         };
     });
 
@@ -59,9 +59,9 @@ builder.Services.AddSwaggerGen(options =>
         In = ParameterLocation.Header,
         Description = "Please enter token",
         Name = "Authorization",
-        Type = SecuritySchemeType.Http,
+        Type = SecuritySchemeType.ApiKey,
         BearerFormat = "JWT",
-        Scheme = "bearer"
+        Scheme = "Bearer"
 
     });
 
