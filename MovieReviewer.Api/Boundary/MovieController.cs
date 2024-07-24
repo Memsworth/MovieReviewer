@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieReviewer.Api.Control.Repository;
+using System.ComponentModel.DataAnnotations;
 
 namespace MovieReviewer.Api.Boundary
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class MovieController(MovieR movieR) : ControllerBase
+    public class MovieController(MovieRepository movieRepository) : ControllerBase
     {
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMovieByIdAsync(int id)
@@ -16,13 +18,19 @@ namespace MovieReviewer.Api.Boundary
         [HttpGet]
         public async Task<IActionResult> GetMovies()
         {
-            throw new NotImplementedException();
+            var result = await movieRepository.GetAllMovies();
+            if (!result.IsSuccess)
+                return BadRequest();
+            return Ok(result.Value);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMovie()
+        public async Task<IActionResult> CreateMovie([Required] string ImdbId)
         {
-            throw new NotImplementedException();
+            var result = await movieRepository.CreateMovie(ImdbId);
+            if (!result.IsSuccess)
+                return BadRequest();
+            return Ok();
         }
 
         [HttpDelete("{id}")]

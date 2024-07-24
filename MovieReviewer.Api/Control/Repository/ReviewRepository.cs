@@ -6,7 +6,7 @@ using MovieReviewer.Api.Data;
 
 namespace MovieReviewer.Api.Control.Repository
 {
-    public class ReviewR(ApplicationDbContext context)
+    public class ReviewRepository(ApplicationDbContext context)
     {
         public async Task<Result> CreateReview(ReviewCreateModel review, int movieId)
         {

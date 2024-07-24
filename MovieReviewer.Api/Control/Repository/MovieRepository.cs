@@ -8,7 +8,7 @@ using MovieReviewer.Api.Data;
 
 namespace MovieReviewer.Api.Control.Repository
 {
-    public class MovieR(ApplicationDbContext context, IMovieClient movieClient)
+    public class MovieRepository(ApplicationDbContext context, IMovieClient movieClient)
     {
         public async Task<Result> CreateMovie(string imdbId)
         {

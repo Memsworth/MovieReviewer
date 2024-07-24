@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieReviewer.Api.Control.Repository;
 
 namespace MovieReviewer.Api.Boundary
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class ReviewController(ReviewR reviewR) : ControllerBase
+    public class ReviewController(ReviewRepository reviewRepository) : ControllerBase
     {
         [HttpGet("{id}")]
         public async Task<IActionResult> GetReviewByIdAsync(int id)
