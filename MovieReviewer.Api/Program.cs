@@ -41,38 +41,42 @@ builder.Services.AddAuthentication(options =>
         options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuerSigningKey = false,
+            ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(key),
             ValidateIssuer = false,
             ValidateAudience = false,
-            RequireExpirationTime = false,
-            ValidateLifetime = false
+            RequireExpirationTime = true,
+            ValidateLifetime = true
         };
     });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
+builder.Services.AddSwaggerGen(c =>
 {
-    options.AddSecurityDefinition("JwtBearer", new OpenApiSecurityScheme
+    c.SwaggerDoc("v1", new OpenApiInfo
     {
-        In = ParameterLocation.Header,
-        Description = "Please enter token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "bearer"
-
+        Title = "MovieReview-Api", Version = "v1"
     });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description =
+            "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer {Token}\"",
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
             new OpenApiSecurityScheme
             {
                 Reference = new OpenApiReference
                 {
-                    Type=ReferenceType.SecurityScheme,
-                    Id="Bearer"
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
                 }
             },
             Array.Empty<string>()
