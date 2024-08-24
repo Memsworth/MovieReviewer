@@ -1,5 +1,5 @@
-﻿using MovieReviewer.Api.Boundary.Models;
-using MovieReviewer.Api.Entities;
+﻿using MovieReviewer.Shared.Core.Models;
+using MovieReviewer.Shared.View;
 
 namespace MovieReviewer.Api.Boundary
 {
@@ -24,7 +24,7 @@ namespace MovieReviewer.Api.Boundary
             return new ReviewViewModel
             {
                 Id = review.Id,
-                ReviewContent = review.ReviewContent,
+                ReviewContent = review.Content,
                 ReviewScore = review.ReviewScore,
                 MovieId = review.MovieId,
             };
@@ -34,7 +34,7 @@ namespace MovieReviewer.Api.Boundary
         {
             return new Review
             {
-                ReviewContent = reviewCreateModel.ReviewContent,
+                Content = reviewCreateModel.ReviewContent,
                 ReviewScore = reviewCreateModel.ReviewScore,
                 MovieId = movieId
             };

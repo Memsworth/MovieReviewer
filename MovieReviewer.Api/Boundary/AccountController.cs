@@ -1,7 +1,7 @@
-using FluentValidation;
+/*using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using MovieReviewer.Api.Boundary.Models;
 using MovieReviewer.Api.Control.Repository;
+using MovieReviewer.Shared.View;
 
 namespace MovieReviewer.Api.Boundary
 {
@@ -58,4 +58,4 @@ namespace MovieReviewer.Api.Boundary
             RuleFor(x => x.UserName).MinimumLength(5).Matches("^[a-zA-Z0-9_.-]*$");
         }
     }
-}
+}*/
