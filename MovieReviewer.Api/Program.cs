@@ -1,13 +1,10 @@
 using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MovieReviewer.Api.Control.Repository;
 using MovieReviewer.Api.Control.Services;
-using MovieReviewer.Api.Data;
-using MovieReviewer.Api.Entities;
-using MovieReviewer.Api.Entities.Utilities;
+using MovieReviewer.Api.Utilities;
+using MovieReviewer.Shared.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,8 +20,8 @@ builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection(nameof(Jw
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddControllers();
 
-builder.Services.AddIdentity<ApiUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+/*builder.Services.AddIdentity<ApiUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();*/
 
 
 builder.Services.AddAuthentication(options =>

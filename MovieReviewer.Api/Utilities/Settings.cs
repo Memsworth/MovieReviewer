@@ -1,4 +1,4 @@
-﻿namespace MovieReviewer.Api.Entities.Utilities
+﻿namespace MovieReviewer.Api.Utilities
 {
     public class Settings
     {

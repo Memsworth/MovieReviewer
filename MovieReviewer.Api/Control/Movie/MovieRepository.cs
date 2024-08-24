@@ -4,9 +4,9 @@ using MovieReviewer.Api.Boundary;
 using MovieReviewer.Api.Boundary.Models;
 using MovieReviewer.Api.Control.Services;
 using MovieReviewer.Api.Control.Utilities;
-using MovieReviewer.Api.Data;
+using MovieReviewer.Shared.Infrastructure;
 
-namespace MovieReviewer.Api.Control.Repository
+namespace MovieReviewer.Api.Control.Movie
 {
     public class MovieRepository(ApplicationDbContext context, IMovieClient movieClient)
     {

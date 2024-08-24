@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Api", "MovieReviewer.Api\MovieReviewer.Api.csproj", "{42085FD6-8482-4032-A593-C6E50A850A5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieReviewer.Api", "MovieReviewer.Api\MovieReviewer.Api.csproj", "{42085FD6-8482-4032-A593-C6E50A850A5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Shared", "MovieReviewer.Shared\MovieReviewer.Shared.csproj", "{11AC1848-05B6-43FB-B4F2-2CDC49E60016}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{42085FD6-8482-4032-A593-C6E50A850A5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42085FD6-8482-4032-A593-C6E50A850A5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42085FD6-8482-4032-A593-C6E50A850A5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11AC1848-05B6-43FB-B4F2-2CDC49E60016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11AC1848-05B6-43FB-B4F2-2CDC49E60016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11AC1848-05B6-43FB-B4F2-2CDC49E60016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11AC1848-05B6-43FB-B4F2-2CDC49E60016}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-﻿namespace MovieReviewer.Api.Entities.Utilities
+﻿namespace MovieReviewer.Shared.Core.Utilities
 {
     public enum Language
     {

@@ -1,7 +1,6 @@
 ﻿using MovieReviewer.Api.Control.Services;
-using MovieReviewer.Api.Entities.Utilities;
-using MovieReviewer.Api.Entities;
-
+using MovieReviewer.Shared.Core.Models;
+using MovieReviewer.Shared.Core.Utilities;
 namespace MovieReviewer.Api.Control.Utilities
 {
     public static class Parsers

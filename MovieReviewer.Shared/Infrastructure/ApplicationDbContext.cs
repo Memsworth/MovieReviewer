@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using MovieReviewer.Api.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MovieReviewer.Shared.Core.Models;
 
-namespace MovieReviewer.Api.Data
+namespace MovieReviewer.Shared.Infrastructure
 {
-    public class ApplicationDbContext : IdentityDbContext<ApiUser>
+    public class ApplicationDbContext : DbContext
     {
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public required string DbPath { get; set; }
+
         public ApplicationDbContext()
         {
             var folder = Environment.SpecialFolder.MyDocuments;

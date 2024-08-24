@@ -1,6 +1,6 @@
 ﻿using Ardalis.Result;
 using Microsoft.Extensions.Options;
-using MovieReviewer.Api.Entities.Utilities;
+using MovieReviewer.Api.Utilities;
 using Newtonsoft.Json;
 
 namespace MovieReviewer.Api.Control.Services
