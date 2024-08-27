@@ -1,0 +1,39 @@
+﻿@page "/Movie"
+@inject MovieReviewerApiService Service;
+@using MovieReviewer.Shared.View
+@using MovieReviewer.WebUI.Client.Services
+
+<h3>Movie</h3>
+
+@if (_movies is null)
+{
+    <MudText Typo="Typo.h3">Loading....</MudText>
+}
+
+<MudGrid>
+    @foreach (var item in _movies)
+    {
+        <MudItem>
+            <MudCard>
+                <MudCardHeader>
+                    <MudCardContent>
+                        <MudText Typo="Typo.h6">@item.Title</MudText>
+                    </MudCardContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText Typo="Typo.body2">@item.Plot</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    private IEnumerable<MovieViewModel>? _movies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _movies = await Service.GetMoviesAsync();
+    }
+
+}
