@@ -68,6 +68,9 @@ namespace MovieReviewer.Api.Features.Movie
             if (movie is null)
                 return Result.NotFound();
 
+            if (movie.IsDisabled)
+                return Result.Unavailable();
+
             movie.IsDisabled = true;
             movie.LastUpdatedAt = DateTime.UtcNow;
 

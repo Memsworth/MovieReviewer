@@ -1,45 +1,64 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Ardalis.Result;
-using Ardalis.Result.AspNetCore;
 using MovieReviewer.Shared.View;
 using FluentValidation;
 
 namespace MovieReviewer.Api.Features.Movie
 {
     [ApiController]
-    [TranslateResultToActionResult]
     [Route("[controller]")]
-    public class MovieController(MovieRepository movieRepository) : ControllerBase
+    public class MovieController(MovieService movieService) : ControllerBase
     {
         private readonly MovieUpdateValidator _updateValidator = new();
 
         [HttpGet("{id}")]
-        public async Task<Result<MovieViewModel>> GetMovieByIdAsync([Required] int id)
+        public async Task<IActionResult> GetMovieByIdAsync([Required] int id)
         {
-            var result = await movieRepository.GetMovieById(id);
-            return result;
+            var result = await movieService.GetMovieById(id);
+
+            if (result.IsSuccess)
+                return Ok(result.Value);
+
+            return NotFound();
         }
 
         [HttpGet]
-        public async Task<Result<List<MovieViewModel>>> GetMovies()
+        public async Task<IActionResult> GetMovies()
         {
-            var result = await movieRepository.GetAllMovies();
-            return result;
+            var movies = await movieService.GetAllMovies();
+            return Ok(movies);
         }
 
         [HttpPost]
-        public async Task<Result> CreateMovie([Required] string ImdbId)
+        public async Task<IActionResult> CreateMovie([Required] string ImdbId)
         {
-            var result = await movieRepository.CreateMovie(ImdbId);
-            return result;
+            var result = await movieService.CreateMovie(ImdbId);
+
+            if (result.IsSuccess)
+                return Ok(result.Value);
+
+            if (result.IsConflict())
+                return Conflict();
+
+            if (result.IsNotFound())
+                return NotFound();
+
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]
-        public async Task<Result> DeleteMovie(int id)
+        public async Task<IActionResult> DeleteMovie(int id)
         {
-            var result = await movieRepository.DeleteMovie(id);
-            return result;
+            var result = await movieService.DeleteMovie(id);
+
+            if (result.IsSuccess)
+                return NoContent();
+
+            if (result.IsUnavailable())
+                return UnprocessableEntity();
+
+            return NotFound();
         }
 
         [HttpPut("{id}")]
@@ -49,8 +68,12 @@ namespace MovieReviewer.Api.Features.Movie
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors);
 
-            var responseResult = await movieRepository.UpdateMovie(id, movieUpdateModel);
-            return result;
+            var result = await movieService.UpdateMovie(id, movieUpdateModel);
+
+            if (result.IsSuccess)
+                return NoContent();
+
+            return NotFound();
         }
     }
 
