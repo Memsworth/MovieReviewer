@@ -8,8 +8,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MovieReviewer.Api\MovieReviewer.Api.csproj" />
-    <ProjectReference Include="..\MovieReviewer.WebUI.Client\MovieReviewer.WebUI.Client.csproj" />
+    <ProjectReference Include="..\MovieReviewer.Web.Client\MovieReviewer.Web.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.*" />
   </ItemGroup>
 

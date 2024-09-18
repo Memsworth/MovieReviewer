@@ -1,5 +1,5 @@
-using MovieReviewer.WebUI.Client.Pages;
-using MovieReviewer.WebUI.Components;
+using MovieReviewer.Web.Client.Pages;
+using MovieReviewer.Web.Components;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,9 +11,6 @@ builder.Services.AddMudServices();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
-
-builder.Services.AddHttpClient("WebApi", 
-    client => client.BaseAddress = new Uri("http://localhost:5161/"));  
 
 var app = builder.Build();
 
@@ -37,6 +34,6 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(MovieReviewer.WebUI.Client._Imports).Assembly);
+    .AddAdditionalAssemblies(typeof(MovieReviewer.Web.Client._Imports).Assembly);
 
 app.Run();
