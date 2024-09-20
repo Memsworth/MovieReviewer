@@ -1,0 +1,33 @@
+﻿@page "/"
+@rendermode InteractiveAuto
+@inject HttpClient http
+
+<PageTitle>Za Reviewer</PageTitle>
+
+@if (isLoading is true)
+{
+    <MudText Typo="Typo.h4">Loading Content...</MudText>
+}
+else
+{
+    <MudGrid>
+        @foreach (var movie in _movies)
+    {
+        <MudItem xs="4">
+            <MovieCard Movie="movie" />
+        </MudItem>
+    }
+    </MudGrid>
+}
+
+@code {
+    private List<MovieViewModel> _movies = new();
+    private bool isLoading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true;
+        _movies = await http.GetFromJsonAsync<List<MovieViewModel>>("/Movie") ?? [];
+        isLoading = false;
+    }
+}

@@ -1,4 +1,3 @@
-using MovieReviewer.Web.Client.Pages;
 using MovieReviewer.Web.Components;
 using MudBlazor.Services;
 
@@ -6,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add MudBlazor services
 builder.Services.AddMudServices();
-
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5161") });
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()

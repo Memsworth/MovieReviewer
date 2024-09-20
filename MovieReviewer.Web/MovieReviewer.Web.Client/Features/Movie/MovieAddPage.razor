@@ -1,0 +1,10 @@
+﻿@page "/Moive/Add/"
+
+<PageTitle>Adding a Movie</PageTitle>
+
+<MudForm>
+    <MudTextField T="string" Label="IMDB-Id" Required="true" RequiredError="Put a damn ID. You are an idiot" />
+</MudForm>
+@code {
+    public required string ImdbId = string.Empty;
+}

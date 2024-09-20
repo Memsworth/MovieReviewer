@@ -1,0 +1,20 @@
+﻿<MudCard>
+    <MudCardContent>
+        <MudText Typo="Typo.h5">@Movie.Title</MudText>
+        <MudText Typo="Typo.body2">@Movie.Plot</MudText>
+        <div class="d-flex justify-space-between flex-grow-1 gap-4">
+            <MudText Typo="Typo.body2">
+                @Movie.ImdbRating
+            </MudText>
+
+            <MudText Align="Align.End" Typo="Typo.body2">
+                @Movie.MovieRating.ToString()
+            </MudText>
+        </div>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter, EditorRequired]
+    public required MovieViewModel Movie { get; set; }
+}
