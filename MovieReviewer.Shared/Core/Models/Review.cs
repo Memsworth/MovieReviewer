@@ -1,6 +1,4 @@
-﻿using MovieReviewer.Shared.Core.Utilities;
-
-namespace MovieReviewer.Shared.Core.Models
+﻿namespace MovieReviewer.Shared.Core.Models
 {
     public class Review : Comment
     {

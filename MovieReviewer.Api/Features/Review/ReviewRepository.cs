@@ -1,56 +1,33 @@
-﻿using Ardalis.Result;
-using Microsoft.EntityFrameworkCore;
-using MovieReviewer.Api.Boundary;
+﻿using Microsoft.EntityFrameworkCore;
 using MovieReviewer.Shared.Infrastructure;
-using MovieReviewer.Shared.View;
 
 namespace MovieReviewer.Api.Features.Review
 {
     public class ReviewRepository(ApplicationDbContext context)
     {
-        public async Task<Result> CreateReview(ReviewCreateModel review, int movieId)
+        public async Task Create(Shared.Core.Models.Review review)
         {
-            //TODO: I am checking if movie is in the db. Should this even be here? Come back and perform test/write tests
-            if (await context.Movies.FirstOrDefaultAsync(x => x.Id == movieId) is null)
-                return Result.NotFound();
-
-            var item = review.ToReviewEntity(movieId);
-            await context.Reviews.AddAsync(item);
+            await context.Reviews.AddAsync(review);
             await context.SaveChangesAsync();
-            return Result.Success();
         }
-        public async Task<Result<ReviewViewModel>> GetReviewById(int reviewId)
+        
+        public async Task<Shared.Core.Models.Review?> GetById(int reviewId) 
+            => await context.Reviews.FirstOrDefaultAsync(x => x.Id == reviewId);
+        
+        public IQueryable<Shared.Core.Models.Review> GetAll()
         {
-            var item = await context.Reviews.FirstOrDefaultAsync(x => x.Id == reviewId);
-            return item is null ? Result.NotFound() : Result.Success(item.ToReviewViewModel());
-        }
-        public async Task<Result<List<ReviewViewModel>>> GetAllReviews()
-        {
-            var items = await context.Reviews.Select(x => x.ToReviewViewModel()).ToListAsync();
-            return Result.Success(items);
+            return context.Reviews;
         }
 
-        public async Task<Result> DeleteReview(int reviewId)
+        public async Task Update()
         {
-            var item = await context.Reviews.FirstOrDefaultAsync(x => x.Id == reviewId);
-            if (item is null)
-                return Result.NotFound();
-
-            item.IsDeleted = true;
             await context.SaveChangesAsync();
-            return Result.NoContent();
         }
-        public async Task<Result> UpdateReview(int reviewId, ReviewUpdateModel review)
-        {
-            var item = await context.Reviews.FirstOrDefaultAsync(x => x.Id == reviewId);
-            if (item is null)
-                return Result.NotFound();
 
-            item.IsDeleted = review.IsDisabled;
-            item.Content = review.ReviewContent;
-            item.ReviewScore = review.ReviewScore;
+        public async Task Delete()
+        {
             await context.SaveChangesAsync();
-            return Result.NoContent();
         }
+     
     }
 }

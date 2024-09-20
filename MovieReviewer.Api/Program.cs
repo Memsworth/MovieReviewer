@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<MovieRepository>();
 builder.Services.AddScoped<MovieService>();
 builder.Services.AddScoped<ReviewRepository>();
+builder.Services.AddScoped<ReviewService>();
 //builder.Services.AddScoped<AuthRepository>();
 //builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IMovieClient, OmDbClient>();
