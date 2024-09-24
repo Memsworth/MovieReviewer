@@ -1,4 +1,4 @@
-﻿namespace MovieReviewer.Shared.Core.Utilities
+﻿namespace MovieReviewer.Shared.Core.Domain
 {
     public class BaseEntity
     {

@@ -6,6 +6,7 @@ using MovieReviewer.Api.Features.Movie;
 using MovieReviewer.Api.Features.Review;
 using MovieReviewer.Api.Features.Services;
 using MovieReviewer.Api.Utilities;
+using MovieReviewer.Shared.Core.Interfaces;
 using MovieReviewer.Shared.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

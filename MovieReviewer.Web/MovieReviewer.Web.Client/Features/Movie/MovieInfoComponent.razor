@@ -1,0 +1,37 @@
+﻿@using MovieReviewer.Shared.Core.Domain
+@using MovieReviewer.Shared.Core.Utilities
+
+<MudGrid>
+    <MudItem xs="12" sm="7">
+        <MudPaper Class="pa-4">
+            
+            <MudTextField @bind-Text="@Movie.Title" T="string" Label="Title"/>
+
+            <MudTextField @bind-Text="@Movie.Plot" T="string" Label="Plot"/>
+
+            <MudSelect @bind-Value="Movie.MovieLanguage" Label="Movie Language">
+                @foreach (var language in Enum.GetValues(typeof(Language)).Cast<Language>())
+                {
+                    <MudSelectItem Value="@language">@language</MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudSelect @bind-Value="Movie.MovieRating" Label="Movie Language">
+                @foreach (var rating in Enum.GetValues(typeof(RatingSystem)).Cast<RatingSystem>())
+                { 
+                    <MudSelectItem Value="@rating">@rating</MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudTextField @bind-Text="@Movie.ImdbId" T="string" Label="Imdb Id" ReadOnly="true"/>
+            <MudNumericField @bind-Value="@Movie.ImdbRating" Label="Imdb Rating" Min="1.0" Max="10.0"/>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+
+
+@code {
+    [Parameter] 
+    public Movie? Movie { get; set; }
+}

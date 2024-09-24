@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Ardalis.Result;
-using MovieReviewer.Shared.View;
-using FluentValidation;
+using MovieReviewer.Shared.Core.DTO.Inputs;
+using MovieReviewer.Shared.Core.Validation;
 
 namespace MovieReviewer.Api.Features.Movie
 {
@@ -10,12 +10,13 @@ namespace MovieReviewer.Api.Features.Movie
     [Route("[controller]")]
     public class MovieController(MovieService movieService) : ControllerBase
     {
-        private readonly MovieUpdateValidator _updateValidator = new();
+        private readonly UpdateMovieInputValidation _updateValidator = new();
+        private readonly CreateMovieInputValidation _createValidator = new();
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMovieByIdAsync([Required] int id)
         {
-            var result = await movieService.GetMovieById(id);
+            var result = await movieService.GetMovieByIdAsync(id);
 
             if (result.IsSuccess)
                 return Ok(result.Value);
@@ -23,17 +24,30 @@ namespace MovieReviewer.Api.Features.Movie
             return NotFound();
         }
 
+        [HttpGet("MovieInfo/{imdbId}")]
+        public async Task<IActionResult> GetMovieInfoAsync([Required] string imdbId)
+        {
+            //here is IMDBId
+            var result = await movieService.CreateMovieInfoAsync(imdbId);
+            
+            //TODO: change this a bit
+            return result.IsSuccess ? Ok(result.Value) : NotFound();
+        }
         [HttpGet]
         public async Task<IActionResult> GetMovies()
         {
-            var movies = await movieService.GetAllMovies();
+            var movies = await movieService.GetAllMoviesAsync();
             return Ok(movies);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMovie([Required] string ImdbId)
+        public async Task<IActionResult> CreateMovie(CreateMovieInputModel createMovie)
         {
-            var result = await movieService.CreateMovie(ImdbId);
+            var validationResult = await _createValidator.ValidateAsync(createMovie);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors);
+            
+            var result = await movieService.CreateMovieAsync(createMovie);
 
             if (result.IsSuccess)
                 return Ok(result.Value);
@@ -50,7 +64,7 @@ namespace MovieReviewer.Api.Features.Movie
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
-            var result = await movieService.DeleteMovie(id);
+            var result = await movieService.DeleteMovieAsync(id);
 
             if (result.IsSuccess)
                 return NoContent();
@@ -62,30 +76,18 @@ namespace MovieReviewer.Api.Features.Movie
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMovie([Required] int id, [FromBody] MovieUpdateModel movieUpdateModel)
+        public async Task<IActionResult> UpdateMovie([Required] int id, [FromBody] UpdateMovieInputModel movieUpdate)
         {
-            var validationResult = _updateValidator.Validate(movieUpdateModel);
+            var validationResult = await _updateValidator.ValidateAsync(movieUpdate);
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors);
 
-            var result = await movieService.UpdateMovie(id, movieUpdateModel);
+            var result = await movieService.UpdateMovieAsync(id, movieUpdate);
 
             if (result.IsSuccess)
                 return NoContent();
 
             return NotFound();
-        }
-    }
-
-    public class MovieUpdateValidator : AbstractValidator<MovieUpdateModel>
-    {
-        public MovieUpdateValidator()
-        {
-            RuleFor(x=> x.Title).NotEmpty();
-            RuleFor(x=> x.Plot).MinimumLength(5);
-            RuleFor(x => x.MovieRating).NotEmpty();
-            RuleFor(x=> x.MovieLanguage).NotEmpty();
-            RuleFor(x => x.ImdbRating).InclusiveBetween(1.0, 10.0);
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using Ardalis.Result;
 using Microsoft.EntityFrameworkCore;
-using MovieReviewer.Api.Boundary;
 using MovieReviewer.Api.Features.Movie;
-using MovieReviewer.Shared.View;
 
 namespace MovieReviewer.Api.Features.Review
 {

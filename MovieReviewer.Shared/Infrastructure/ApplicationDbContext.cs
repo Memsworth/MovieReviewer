@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MovieReviewer.Shared.Core.Models;
+using MovieReviewer.Shared.Core.Domain;
 
 namespace MovieReviewer.Shared.Infrastructure
 {

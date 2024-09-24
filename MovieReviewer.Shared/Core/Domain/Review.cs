@@ -1,4 +1,4 @@
-﻿namespace MovieReviewer.Shared.Core.Models
+﻿namespace MovieReviewer.Shared.Core.Domain
 {
     public class Review : Comment
     {

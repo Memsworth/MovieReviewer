@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MovieReviewer.Api.Utilities;
+using MovieReviewer.Shared.Core.DTO.Outputs;
+using MovieReviewer.Shared.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace MovieReviewer.Api.Features.Services
@@ -17,13 +19,13 @@ namespace MovieReviewer.Api.Features.Services
             };
         }
 
-        public async Task<MovieInformation?> GetMovieInfo(string imdbId)
+        public async Task<ImdbMovieDTO?> GetMovieInfoFromExternalApiAsync(string imdbId)
         {
             var result = await GenerateDataFromExternalApi(imdbId);
             if (result is null)
                 return null;
 
-            return new MovieInformation
+            return new ImdbMovieDTO
             {
                 Title = result.Title,
                 Rated = result.Rated,
@@ -39,7 +41,7 @@ namespace MovieReviewer.Api.Features.Services
             var url = $"?i={imdbId}&apikey={_settings.Value.ApiKey}";
             var apiResponse = await _httpClient.GetAsync(url);
             var result = await ParseRawDataIntoObjects(apiResponse.Content);
-            return result is not null ? result : null;
+            return result;
         }
 
         private async Task<OmDbMovieDataResponse?> ParseRawDataIntoObjects(HttpContent content)

@@ -1,6 +1,6 @@
-﻿using MovieReviewer.Shared.Core.Utilities;
+﻿using MovieReviewer.Shared.Core.Enums;
 
-namespace MovieReviewer.Shared.Core.Models
+namespace MovieReviewer.Shared.Core.Domain
 {
     public class Movie : BaseEntity
     {

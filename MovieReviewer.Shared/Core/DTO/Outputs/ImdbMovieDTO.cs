@@ -1,6 +1,6 @@
-﻿namespace MovieReviewer.Api.Features.Services
+﻿namespace MovieReviewer.Shared.Core.DTO.Outputs
 {
-    public class MovieInformation
+    public class ImdbMovieDTO
     {
         public required string Title { get; set; }
         public required string Rated { get; set; }

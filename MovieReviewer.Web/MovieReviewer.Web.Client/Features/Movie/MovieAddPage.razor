@@ -1,10 +1,26 @@
-﻿@page "/Moive/Add/"
+﻿@page "/movie/add/"
+@using MovieReviewer.Shared.Core.Domain
+@inject HttpClient Http
+@rendermode InteractiveAuto
+
+<MudPopoverProvider />
 
 <PageTitle>Adding a Movie</PageTitle>
 
-<MudForm>
-    <MudTextField T="string" Label="IMDB-Id" Required="true" RequiredError="Put a damn ID. You are an idiot" />
-</MudForm>
+<MudTextField @bind-Value = "@_imdbId" Label="IMDB-Id" Class="mb-4" Required="true" RequiredError="Put a damn ID. You are an idiot" />
+<MudButton Variant="Variant.Filled" Class="mb-4" Color="Color.Primary" OnClick="ClickHandler">Get Movie Data</MudButton>
+
+@if (_movie is not null)
+{
+    <MovieInfoComponent Movie="_movie"/>
+}
+
 @code {
-    public required string ImdbId = string.Empty;
+    private string _imdbId = string.Empty;
+    private Movie? _movie { get; set; }
+
+    async Task ClickHandler()
+    {
+        _movie = await Http.GetFromJsonAsync<Movie>($"Movie/MovieInfo/{_imdbId}");
+    }
 }

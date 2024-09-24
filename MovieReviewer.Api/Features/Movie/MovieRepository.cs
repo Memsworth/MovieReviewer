@@ -1,37 +1,33 @@
-﻿using Ardalis.Result;
-using Microsoft.EntityFrameworkCore;
-using MovieReviewer.Api.Boundary;
-using MovieReviewer.Api.Utilities;
+﻿using Microsoft.EntityFrameworkCore;
 using MovieReviewer.Shared.Infrastructure;
-using MovieReviewer.Shared.View;
 
 namespace MovieReviewer.Api.Features.Movie
 {
     public class MovieRepository(ApplicationDbContext context)
     {
-        public async Task Create(Shared.Core.Models.Movie movie)
+        public async Task CreateAsync(Shared.Core.Domain.Movie movie)
         {
             await context.Movies.AddAsync(movie);
             await context.SaveChangesAsync();
         }
 
-        public async Task<Shared.Core.Models.Movie?> GetById(int movieId) 
+        public async Task<Shared.Core.Domain.Movie?> GetByIdAsync(int movieId) 
             => await context.Movies.FirstOrDefaultAsync(x => x.Id == movieId);
 
-        public async Task<Shared.Core.Models.Movie?> GetByImdbId(string imdbId) 
+        public async Task<Shared.Core.Domain.Movie?> GetByImdbIdAsync(string imdbId) 
             => await context.Movies.FirstOrDefaultAsync(x => x.ImdbId == imdbId);
 
-        public IQueryable<Shared.Core.Models.Movie> GetAll()
+        public IQueryable<Shared.Core.Domain.Movie> GetAll()
         {
             return context.Movies;
         }
 
-        public async Task Update(Shared.Core.Models.Movie movie)
+        public async Task UpdateAsync(Shared.Core.Domain.Movie movie)
         {
             await context.SaveChangesAsync();
         }
 
-        public async Task Delete()
+        public async Task DeleteAsync()
         {
             await context.SaveChangesAsync();
         }
