@@ -1,4 +1,5 @@
-﻿<MudCard>
+﻿@using MovieReviewer.Shared.Core.DTO.Outputs
+<MudCard>
     <MudCardContent>
         <MudText Typo="Typo.h5">@Movie.Title</MudText>
         <MudText Typo="Typo.body2">@Movie.Plot</MudText>
@@ -16,5 +17,5 @@
 
 @code {
     [Parameter, EditorRequired]
-    public required MovieViewModel Movie { get; set; }
+    public required MovieViewDTO Movie { get; set; }
 }

@@ -11,6 +11,11 @@ namespace MovieReviewer.Api.Features.Movie
             await context.SaveChangesAsync();
         }
 
+        public async Task<bool> MovieExistsById(int id) => 
+            await context.Movies.AnyAsync(m => m.Id == id);
+        public async Task<bool> MovieExistByImdbId(string imdbId) => 
+            await context.Movies.AnyAsync(m => m.ImdbId == imdbId);
+
         public async Task<Shared.Core.Domain.Movie?> GetByIdAsync(int movieId) 
             => await context.Movies.FirstOrDefaultAsync(x => x.Id == movieId);
 

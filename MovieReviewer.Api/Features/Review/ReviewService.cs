@@ -1,42 +1,47 @@
 ﻿using Ardalis.Result;
 using Microsoft.EntityFrameworkCore;
 using MovieReviewer.Api.Features.Movie;
+using MovieReviewer.Shared.Core.DTO.Inputs;
+using MovieReviewer.Shared.Core.DTO.Outputs;
+using MovieReviewer.Shared.Core.Helpers;
 
 namespace MovieReviewer.Api.Features.Review
 {
     public class ReviewService(ReviewRepository reviewRepository, MovieService movieService)
     {
-        public async Task<Result> CreateReview(ReviewCreateModel review, int movieId)
+        public async Task<Result> CreateReview(CreateReviewInputModel createReview, int movieId)
         {
             //TODO: I am checking if movie is in the db. Should this even be here? Come back and perform test/write tests
-            var movieResult = await movieService.GetMovieById(movieId);
-            if (!movieResult.IsSuccess)
+            var movieResult = await movieService.MovieExistsById(movieId);
+            //this is a code smell. How would I even be submitting an id of a movie if it is not shown?
+            //Ask devs later about this
+            if (movieResult is false)
                 return Result.NotFound();
 
-            var item = review.ToReviewEntity(movieId);
-            await reviewRepository.Create(item);
+            var review = createReview.ToReview(movieId);
+            await reviewRepository.Create(review);
             return Result.Success();
         }
 
-        public async Task<Result<ReviewViewModel>> GetReviewById(int reviewId)
+        public async Task<Result<ReviewViewDTO>> GetReviewById(int reviewId)
         {
-            var item = await reviewRepository.GetById(reviewId);
+            var review = await reviewRepository.GetById(reviewId);
 
-            if (item is null || item.IsDeleted)
+            if (review is null || review.IsDeleted)
                 return Result.NotFound();
 
-            return Result.Success(item.ToReviewViewModel());
+            return Result.Success(review.ToReviewViewDTO());
         }
 
-        public async Task<List<ReviewViewModel>> GetAllReviews()
+        public async Task<List<ReviewViewDTO>> GetAllReviews()
         {
             var items = await reviewRepository.GetAll().Where(x => x.IsDeleted != true)
-                .Select(x => x.ToReviewViewModel()).ToListAsync();
+                .Select(x => x.ToReviewViewDTO()).ToListAsync();
             
             return items;
         }
 
-        public async Task<Result> UpdateReview(int reviewId ,ReviewCreateModel reviewUpdate)
+        public async Task<Result> UpdateReview(int reviewId ,UpdateReviewInputModel reviewUpdate)
         {
             var review = await reviewRepository.GetById(reviewId);
 
@@ -45,12 +50,13 @@ namespace MovieReviewer.Api.Features.Review
 
             review.Content = reviewUpdate.ReviewContent;
             review.ReviewScore = reviewUpdate.ReviewScore;
+            review.IsDeleted = reviewUpdate.IsDisabled;
 
             await reviewRepository.Update();
             return Result.Success();
         }
 
-        public async Task<Result> DeleteReivew(int reviewId)
+        public async Task<Result> DeleteReview(int reviewId)
         {
             var review = await reviewRepository.GetById(reviewId);
 

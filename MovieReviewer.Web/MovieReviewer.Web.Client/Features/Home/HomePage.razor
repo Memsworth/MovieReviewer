@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using MovieReviewer.Shared.Core.DTO.Outputs
 @rendermode InteractiveAuto
 @inject HttpClient http
 
@@ -21,13 +22,13 @@ else
 }
 
 @code {
-    private List<MovieViewModel> _movies = new();
+    private List<MovieViewDTO> _movies = new();
     private bool isLoading;
 
     protected override async Task OnInitializedAsync()
     {
         isLoading = true;
-        _movies = await http.GetFromJsonAsync<List<MovieViewModel>>("/Movie") ?? [];
+        _movies = await http.GetFromJsonAsync<List<MovieViewDTO>>("/Movie") ?? [];
         isLoading = false;
     }
 }

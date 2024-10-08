@@ -1,9 +1,8 @@
 ﻿using Ardalis.Result;
-using FluentValidation;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MovieReviewer.Shared.View;
 using System.ComponentModel.DataAnnotations;
+using MovieReviewer.Shared.Core.DTO.Inputs;
+using MovieReviewer.Shared.Core.Validation;
 
 namespace MovieReviewer.Api.Features.Review
 {
@@ -11,7 +10,8 @@ namespace MovieReviewer.Api.Features.Review
     [Route("[controller]")]
     public class ReviewController(ReviewService reviewService) : ControllerBase
     {
-        private readonly ReviewCreateValidator _createValidator = new();
+        private readonly CreateReviewInputValidation _createValidator = new();
+        private readonly UpdateReviewInputValidation _updateValidator = new();
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetReviewByIdAsync([Required] int id)
@@ -31,9 +31,9 @@ namespace MovieReviewer.Api.Features.Review
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReview([Required] int movieId, ReviewCreateModel reviewCreate)
+        public async Task<IActionResult> CreateReview([Required] int movieId, CreateReviewInputModel reviewCreate)
         {
-            var validationResult = _createValidator.Validate(reviewCreate);
+            var validationResult = await _createValidator.ValidateAsync(reviewCreate);
             if (!validationResult.IsValid)
                 return BadRequest(validationResult);
 
@@ -48,7 +48,7 @@ namespace MovieReviewer.Api.Features.Review
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReview([Required] int id)
         {
-            var result = await reviewService.DeleteReivew(id);
+            var result = await reviewService.DeleteReview(id);
 
             if (!result.IsSuccess)
                 return NotFound();
@@ -57,9 +57,9 @@ namespace MovieReviewer.Api.Features.Review
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateReview([Required] int id, ReviewCreateModel reviewUpdate)
+        public async Task<IActionResult> UpdateReview([Required] int id, UpdateReviewInputModel reviewUpdate)
         {
-            var validationResult = _createValidator.Validate(reviewUpdate);
+            var validationResult = await _updateValidator.ValidateAsync(reviewUpdate);
             if (!validationResult.IsValid)
                 return BadRequest(validationResult);
 
@@ -72,15 +72,6 @@ namespace MovieReviewer.Api.Features.Review
                 return UnprocessableEntity();
 
             return NoContent();
-        }
-    }
-
-    public class ReviewCreateValidator : AbstractValidator<ReviewCreateModel>
-    {
-        public ReviewCreateValidator()
-        {
-            RuleFor(x => x.ReviewContent).NotEmpty();
-            RuleFor(x => x.ReviewScore).InclusiveBetween(1, 10);
         }
     }
 }

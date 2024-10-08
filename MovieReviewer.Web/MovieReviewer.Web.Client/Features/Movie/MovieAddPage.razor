@@ -1,5 +1,5 @@
 ﻿@page "/movie/add/"
-@using MovieReviewer.Shared.Core.Domain
+@using MovieReviewer.Shared.Core.DTO.Inputs
 @inject HttpClient Http
 @rendermode InteractiveAuto
 
@@ -17,10 +17,10 @@
 
 @code {
     private string _imdbId = string.Empty;
-    private Movie? _movie { get; set; }
+    private CreateMovieInputModel? _movie { get; set; }
 
     async Task ClickHandler()
     {
-        _movie = await Http.GetFromJsonAsync<Movie>($"Movie/MovieInfo/{_imdbId}");
+        _movie = await Http.GetFromJsonAsync<CreateMovieInputModel>($"Movie/MovieInfo/{_imdbId}");
     }
 }

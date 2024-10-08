@@ -12,14 +12,16 @@ namespace MovieReviewer.Api.Features.Movie
         public async Task<Result> CreateMovieAsync(CreateMovieInputModel createMovie)
         {
             //TODO: Check with Skod's cocurreny issue by addding in a Try catch block here
-            var movie = await movieRepository.GetByImdbIdAsync(createMovie.ImdbId);
+            var movie = await MovieExistsById(createMovie.ImdbId);
 
-            if (movie is not null)
+            if (movie)
                 return Result.Conflict();
             
             await movieRepository.CreateAsync(createMovie.ToMovieModel());
             return Result.Success();
         }
+        public async Task<bool> MovieExistsById(int movieId) => await movieRepository.MovieExistsById(movieId);
+        public async Task<bool> MovieExistsById(string imdbId) => await movieRepository.MovieExistByImdbId(imdbId);
         
         public async Task<Result<CreateMovieInputModel>> CreateMovieInfoAsync(string imdbId)
         {
