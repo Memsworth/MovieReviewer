@@ -1,31 +1,38 @@
 ﻿@using MovieReviewer.Shared.Core.Domain
 @using MovieReviewer.Shared.Core.DTO.Inputs
 @using MovieReviewer.Shared.Core.Enums
+@using MovieReviewer.Shared.Core.Validation
+
 
 <MudGrid>
     <MudItem xs="12" sm="7">
         <MudPaper Class="pa-4">
-            
-            <MudTextField @bind-Text="@Movie.Title" T="string" Label="Title"/>
+            <MudForm Model="@Movie" @ref="@form" Validation="@(createValidator.ValidateValue)" ValidationDelay="0">
+                <MudTextField @bind-Text="@Movie!.Title" For="@(() => Movie.Title)" Label="Title"/>
 
-            <MudTextField @bind-Text="@Movie.Plot" T="string" Label="Plot"/>
+                <MudTextField @bind-Text="@Movie.Plot" For="@(() => Movie.Plot)" Label="Plot"/>
 
-            <MudSelect @bind-Value="Movie.MovieLanguage" Label="Movie Language">
-                @foreach (var language in Enum.GetValues(typeof(Language)).Cast<Language>())
-                {
-                    <MudSelectItem Value="@language">@language</MudSelectItem>
-                }
-            </MudSelect>
+                <MudSelect @bind-Value="Movie.MovieLanguage" Label="Movie Language">
+                    @foreach (var language in Enum.GetValues(typeof(Language)).Cast<Language>())
+                    {
+                        <MudSelectItem Value="@language">@language</MudSelectItem>
+                    }
+                </MudSelect>
 
-            <MudSelect @bind-Value="Movie.MovieRating" Label="Movie Language">
-                @foreach (var rating in Enum.GetValues(typeof(RatingSystem)).Cast<RatingSystem>())
-                { 
-                    <MudSelectItem Value="@rating">@rating</MudSelectItem>
-                }
-            </MudSelect>
+                <MudSelect @bind-Value="Movie.MovieRating" Label="Movie Language">
+                    @foreach (var rating in Enum.GetValues(typeof(RatingSystem)).Cast<RatingSystem>())
+                    {
+                        <MudSelectItem Value="@rating">@rating</MudSelectItem>
+                    }
+                </MudSelect>
 
-            <MudTextField @bind-Text="@Movie.ImdbId" T="string" Label="Imdb Id" ReadOnly="true"/>
-            <MudNumericField @bind-Value="@Movie.ImdbRating" Label="Imdb Rating" Min="1.0" Max="10.0"/>
+                <MudTextField @bind-Text="@Movie.ImdbId" For="@(() => Movie.ImdbId)" Label="Imdb Id" ReadOnly="true"/>
+                <MudNumericField @bind-Value="@Movie.ImdbRating" For="@(() => Movie.ImdbRating)" Label="Imdb Rating" Min="1.0" Max="10.0"/>
+            </MudForm>
+        </MudPaper>
+
+        <MudPaper Class="pa-4 mt-4">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="@(async ()=> await Submit())">Submit</MudButton>
         </MudPaper>
     </MudItem>
 </MudGrid>
@@ -35,4 +42,17 @@
 @code {
     [Parameter] 
     public CreateMovieInputModel? Movie { get; set; }
+
+    MudForm form;
+    CreateMovieInputValidation createValidator = new();
+
+    private async Task Submit()
+    {
+        await form.Validate();
+        if (form.IsValid)
+        {
+            
+        }
+    }
+
 }

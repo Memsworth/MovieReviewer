@@ -1,0 +1,47 @@
+@page "/movie/{id:int}"
+@using MovieReviewer.Shared.Core.DTO.Outputs
+@inject HttpClient http
+
+<h3>MovieDetailsPage</h3>
+
+@if (_movie is null)
+{
+    <MudText>Loading....</MudText>
+}
+else
+{
+    <MudGrid>
+        <MudItem>
+            <MudImage></MudImage>
+        </MudItem>
+        <MudItem>
+            <MudPaper>
+                <MudText Typo="Typo.h3" Class="">@_movie.Title</MudText>
+                <MudText Typo="Typo.h6">@_movie.ImdbRating/10</MudText>
+                <MudText Inline="true" Typo="Typo.h6">@_movie.MovieRating.ToString()</MudText>
+                <MudText Inline="true" Typo="Typo.h6">@_movie.MovieRating.ToString()</MudText>
+                <MudText Typo="Typo.h6">Synopsis</MudText>
+                <MudText Typo="Typo.body2">@_movie.Plot</MudText>
+            </MudPaper>
+        </MudItem>
+        
+        <MudItem>
+            
+        </MudItem>
+    </MudGrid>
+}
+
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+    private MovieViewDTO? _movie;
+    private List<ReviewViewDTO> reviews { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _movie = await http.GetFromJsonAsync<MovieViewDTO>($"Movie/{id}");
+        reviews = await http.GetFromJsonAsync<List<ReviewViewDTO>>("Review") ?? new();
+    }
+
+}

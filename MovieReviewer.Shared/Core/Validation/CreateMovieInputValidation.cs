@@ -15,4 +15,13 @@ public class CreateMovieInputValidation : AbstractValidator<CreateMovieInputMode
         RuleFor(model => model.ImdbRating).InclusiveBetween(1.0, 10.0)
             .WithMessage("ImdbRating must be between 1.0 and 10.");
     }
+    
+    public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
+    {
+        var result = await ValidateAsync(ValidationContext<CreateMovieInputModel>
+            .CreateWithOptions((CreateMovieInputModel)model, x => x.IncludeProperties(propertyName)));
+        if (result.IsValid)
+            return Array.Empty<string>();
+        return result.Errors.Select(e => e.ErrorMessage);
+    };
 }
