@@ -1,0 +1,42 @@
+﻿@page "/movie/add/"
+@using MovieReviewer.Shared.Core.DTO.Inputs
+@inject HttpClient Http
+@inject  NavigationManager NavMan
+@rendermode InteractiveAuto
+
+<MudPopoverProvider/>
+<PageTitle>Adding a new movie</PageTitle>
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+    <MudText Typo="Typo.h4" Align="Align.Center">Add a New Movie</MudText>
+    <MudGrid>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="@_imdbId" Label="IMDB-Id" Class="mb-4" Required="true" RequiredError="Put a damn ID. You are an idiot" FullWidth="true"/>
+        </MudItem>
+        <MudItem xs="12" Class="text-center">
+            <MudButton Variant="Variant.Filled" Class="mb-4" Color="Color.Primary" OnClick="ClickHandler">Get</MudButton>
+        </MudItem>
+    </MudGrid>
+
+    @if (_movie is not null)
+    {
+        <MovieForm  Movie="_movie" SubmittedMovieEventCallback="@Callback" />
+    }
+</MudContainer>
+
+@code {
+    private string _imdbId = string.Empty;
+    private CreateMovieInputModel? _movie { get; set; }
+
+    async Task ClickHandler()
+    {
+        _movie = await Http.GetFromJsonAsync<CreateMovieInputModel>($"Movie/MovieInfo/{_imdbId}");
+    }
+
+    private async Task Callback(CreateMovieInputModel obj)
+    {
+        _movie = obj;
+        await Http.PostAsJsonAsync("/Movie", _movie);
+        NavMan.NavigateTo("/");
+    }
+
+}

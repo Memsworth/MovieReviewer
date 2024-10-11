@@ -1,5 +1,4 @@
-﻿@using MovieReviewer.Shared.Core.Domain
-@using MovieReviewer.Shared.Core.DTO.Inputs
+﻿@using MovieReviewer.Shared.Core.DTO.Inputs
 @using MovieReviewer.Shared.Core.Enums
 @using MovieReviewer.Shared.Core.Validation
 
@@ -32,17 +31,15 @@
         </MudPaper>
 
         <MudPaper Class="pa-4 mt-4">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="@(async ()=> await Submit())">Submit</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="@(async () => await Submit())">Submit</MudButton>
         </MudPaper>
     </MudItem>
 </MudGrid>
 
 
-
 @code {
-    [Parameter] 
-    public CreateMovieInputModel? Movie { get; set; }
-
+    [Parameter] public CreateMovieInputModel? Movie { get; set; }
+    [Parameter, EditorRequired] public EventCallback<CreateMovieInputModel> SubmittedMovieEventCallback { get; set; }
     MudForm form;
     CreateMovieInputValidation createValidator = new();
 
@@ -51,7 +48,7 @@
         await form.Validate();
         if (form.IsValid)
         {
-            
+            await SubmittedMovieEventCallback.InvokeAsync(Movie);
         }
     }
 

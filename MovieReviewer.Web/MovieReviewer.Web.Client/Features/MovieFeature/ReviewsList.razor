@@ -1,0 +1,27 @@
+﻿@using MovieReviewer.Shared.Core.DTO.Outputs
+
+
+<MudCard>
+    <MudCardContent>
+        <MudText Typo="Typo.h6" Class="mb-2">Reviews</MudText>
+
+        @if (Reviews is not null && Reviews.Any())
+        {
+            foreach (var review in Reviews)
+            {
+                <MudPaper Class="mt-2 p-2">
+                    <MudRating Value="@review.ReviewScore" ReadOnly="true"/>
+                    <MudText Typo="Typo.body2">@review.ReviewContent</MudText>
+                </MudPaper>
+            }
+        }
+        else
+        {
+            <MudText Typo="Typo.body2" Class="mt-2">No reviews available for this movie.</MudText>
+        }
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] public List<ReviewViewDTO>? Reviews { get; set; }
+}

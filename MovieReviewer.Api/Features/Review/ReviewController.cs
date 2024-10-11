@@ -23,6 +23,13 @@ namespace MovieReviewer.Api.Features.Review
             return Ok(result.Value);
         }
 
+        [HttpGet("GetAll/{id}")]
+        public async Task<IActionResult> GetReviewsByMovieIdAsync([Required] int id)
+        {
+            var items = await reviewService.GetReviewsByMovieId(id);
+            return items is null ? NotFound() : Ok(items);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetReviews()
         {

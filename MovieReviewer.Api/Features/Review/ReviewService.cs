@@ -41,6 +41,19 @@ namespace MovieReviewer.Api.Features.Review
             return items;
         }
 
+        public async Task<List<ReviewViewDTO>?> GetReviewsByMovieId(int movieId)
+        {
+            var movieResult = await movieService.MovieExistsById(movieId);
+            //this is a code smell. How would I even be submitting an id of a movie if it is not shown?
+            //Ask devs later about this
+            if (movieResult is false)
+                return null;
+            
+            var items = await reviewRepository.GetAll().Where(x => x.MovieId == movieId).Select(x => x.ToReviewViewDTO())
+                .ToListAsync();
+            return items;
+        }
+
         public async Task<Result> UpdateReview(int reviewId ,UpdateReviewInputModel reviewUpdate)
         {
             var review = await reviewRepository.GetById(reviewId);

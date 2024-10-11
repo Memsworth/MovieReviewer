@@ -1,5 +1,6 @@
-using MovieReviewer.Web.Components;
 using MudBlazor.Services;
+using MovieReviewer.Web.Client.Pages;
+using MovieReviewer.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
