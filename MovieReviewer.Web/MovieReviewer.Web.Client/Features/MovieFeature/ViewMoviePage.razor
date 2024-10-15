@@ -8,7 +8,6 @@
 
     @if (_movie is not null)
     {
-        <ReviewWriter/>
         <MovieDetails Movie="_movie"/>
         <ReviewsList Reviews="_reviews"/>
     }
@@ -23,7 +22,7 @@
     private MovieViewDTO? _movie;
     private List<ReviewViewDTO>? _reviews;
 
-    /* TODO: Ask other blaozr devs if it is possbile  to call onInit to get movieList & then use onParaSet to change movieObject*/
+    /* TODO: Ask other blazor devs if it is possible to call onInit to get movieList & then use onParaSet to change movieObject*/
     protected override async Task OnInitializedAsync()
     {
         var movieResponse = await Http.GetAsync($"/Movie/{Id}");

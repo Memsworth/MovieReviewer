@@ -20,6 +20,19 @@ public static class MovieParserHelper
             ImdbRating = double.Parse(imdbMovieDTO.ImDbRating),
         };
     }
+
+    public static UpdateMovieInputModel ToMovieUpdateInputModel(this MovieViewDTO movie)
+    {
+        return new UpdateMovieInputModel()
+        {
+            Disabled = false,
+            ImdbRating = movie.ImdbRating,
+            MovieLanguage = movie.MovieLanguage,
+            MovieRating = movie.MovieRating,
+            Plot = movie.Plot,
+            Title = movie.Title
+        };
+    }
     
     public static MovieViewDTO ToMovieViewDTO(this Movie movie)
     {

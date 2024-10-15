@@ -8,13 +8,8 @@ public class CreateMovieInputValidation : AbstractValidator<CreateMovieInputMode
 {
     public CreateMovieInputValidation()
     {
-        RuleFor(model => model.Title).NotEmpty().WithMessage("Title is required");
+        Include(new MovieInputValidation());
         RuleFor(model => model.ImdbId).NotEmpty().WithMessage("ImdbId is required");
-        RuleFor(model => model.MovieRating).IsInEnum().WithMessage("Movie rating is required");
-        RuleFor(model => model.Plot).NotEmpty().WithMessage("Plot is required");
-        RuleFor(model => model.MovieLanguage).IsInEnum().WithMessage("Movie language is required");
-        RuleFor(model => model.ImdbRating).InclusiveBetween(1.0, 10.0)
-            .WithMessage("ImdbRating must be between 1.0 and 10.");
     }
     
     public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
