@@ -5,11 +5,11 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieReviewer.Api", "MovieReviewer.Api\MovieReviewer.Api.csproj", "{42085FD6-8482-4032-A593-C6E50A850A5E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieReviewer.Shared", "MovieReviewer.Shared\MovieReviewer.Shared.csproj", "{11AC1848-05B6-43FB-B4F2-2CDC49E60016}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieReviewer.Core", "MovieReviewer.Core\MovieReviewer.Core.csproj", "{11AC1848-05B6-43FB-B4F2-2CDC49E60016}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Web", "MovieReviewer.Web\MovieReviewer.Web\MovieReviewer.Web.csproj", "{FCE4E2F6-2702-4B82-9677-1EFC77E264A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Web.Blazor", "MovieReviewer.Web.Blazor\MovieReviewer.Web.Blazor.csproj", "{CAAED3D1-4C42-4F95-B8BA-768FC200793C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Web.Client", "MovieReviewer.Web\MovieReviewer.Web.Client\MovieReviewer.Web.Client.csproj", "{76870AA8-EEE6-4610-B97F-5471E37A06DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Service", "MovieReviewer.Service\MovieReviewer.Service.csproj", "{2B56D103-611E-4909-B02D-AE1173C03073}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{11AC1848-05B6-43FB-B4F2-2CDC49E60016}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11AC1848-05B6-43FB-B4F2-2CDC49E60016}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11AC1848-05B6-43FB-B4F2-2CDC49E60016}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCE4E2F6-2702-4B82-9677-1EFC77E264A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCE4E2F6-2702-4B82-9677-1EFC77E264A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCE4E2F6-2702-4B82-9677-1EFC77E264A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCE4E2F6-2702-4B82-9677-1EFC77E264A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76870AA8-EEE6-4610-B97F-5471E37A06DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76870AA8-EEE6-4610-B97F-5471E37A06DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76870AA8-EEE6-4610-B97F-5471E37A06DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76870AA8-EEE6-4610-B97F-5471E37A06DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAAED3D1-4C42-4F95-B8BA-768FC200793C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAAED3D1-4C42-4F95-B8BA-768FC200793C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAAED3D1-4C42-4F95-B8BA-768FC200793C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAAED3D1-4C42-4F95-B8BA-768FC200793C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B56D103-611E-4909-B02D-AE1173C03073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B56D103-611E-4909-B02D-AE1173C03073}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B56D103-611E-4909-B02D-AE1173C03073}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B56D103-611E-4909-B02D-AE1173C03073}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

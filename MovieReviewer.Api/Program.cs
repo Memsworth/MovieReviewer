@@ -1,28 +1,20 @@
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using MovieReviewer.Api.Features.Movie;
-using MovieReviewer.Api.Features.Review;
-using MovieReviewer.Api.Features.Services;
 using MovieReviewer.Api.Utilities;
-using MovieReviewer.Shared.Core.Interfaces;
-using MovieReviewer.Shared.Infrastructure;
+using MovieReviewer.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<MovieRepository>();
-builder.Services.AddScoped<MovieService>();
-builder.Services.AddScoped<ReviewRepository>();
-builder.Services.AddScoped<ReviewService>();
+//builder.Services.AddScoped<MovieRepository>();
+//builder.Services.AddScoped<MovieService>();
+//builder.Services.AddScoped<ReviewRepository>();
+//builder.Services.AddScoped<ReviewService>();
 //builder.Services.AddScoped<AuthRepository>();
 //builder.Services.AddScoped<JwtService>();
-builder.Services.AddScoped<IMovieClient, OmDbClient>();
+//builder.Services.AddScoped<IMovieClient, OmDbClient>();
 
 builder.Services.Configure<Settings>(builder.Configuration.GetSection(nameof(Settings)));
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection(nameof(JwtConfig)));
-builder.Services.AddDbContext<ApplicationDbContext>();
+//builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddControllers();
 
 /*builder.Services.AddIdentity<ApiUser, IdentityRole>()
