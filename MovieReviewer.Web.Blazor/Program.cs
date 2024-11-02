@@ -1,10 +1,18 @@
+using MovieReviewer.Core.Infrastructure;
+using MovieReviewer.Core.Infrastructure.Repositories;
+using MovieReviewer.Core.Interfaces;
 using MovieReviewer.Service;
 using MovieReviewer.Web.Blazor.Components;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddScoped<MovieRepository>();
+builder.Services.AddScoped<MovieService>();
+builder.Services.AddScoped<ReviewRepository>();
+builder.Services.AddScoped<ReviewService>();
+builder.Services.AddScoped<IMovieClient, OmDbClient>();
+builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.Configure<Settings>(builder.Configuration.GetSection(nameof(Settings)));
 
 // Add MudBlazor services

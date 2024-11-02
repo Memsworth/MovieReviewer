@@ -1,0 +1,33 @@
+@page "/"
+@using MovieReviewer.Core.DTO.Outputs
+@using MovieReviewer.Service
+@inject MovieService MovieService
+
+<PageTitle>Home</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
+<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor and the .NET 8 Template!</MudText>
+
+@if (!_movies.Any())
+{
+    <MudText Typo="Typo.h4">Loading Content...</MudText>
+}
+else
+{
+    <MudGrid>
+        @foreach (var movie in _movies)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3" xl="3">
+                <MovieCard Movie="@movie"/>
+            </MudItem>
+        }
+    </MudGrid>
+}
+
+@code {
+    private IReadOnlyList<MovieViewDTO> _movies = [];
+    protected override async Task OnInitializedAsync()
+    {
+        _movies = await MovieService.GetAllMoviesAsync() ?? [];
+    }
+}

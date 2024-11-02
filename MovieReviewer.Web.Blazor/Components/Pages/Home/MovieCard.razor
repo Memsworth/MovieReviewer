@@ -1,0 +1,32 @@
+@using MovieReviewer.Core.DTO.Outputs
+@using MovieReviewer.Core.Enums
+
+<MudCard>
+    <MudCardMedia Image="https://via.placeholder.com/150" Alt="@Movie.Title"/>
+    <MudCardContent>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Typo="Typo.h5" Align="Align.Left">@Movie.Title</MudText>
+            </MudItem>
+            <MudItem xs="12">
+                <MudText Typo="Typo.body1">@Movie.Plot</MudText>
+            </MudItem>
+            <MudItem xs="6">
+                <MudText Typo="Typo.body2">Rating: @Movie.ImdbRating</MudText>
+            </MudItem>
+            <MudItem xs="6" Align="Align.Right">
+                <MudText Typo="Typo.body2">Language: @Movie.MovieLanguage</MudText>
+            </MudItem>
+        </MudGrid>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] [EditorRequired] public MovieViewDTO Movie { get; set; }
+    private string Title => Movie.Title;
+    private string Plot => Movie.Plot;
+    private RatingSystem MovieRating => Movie.MovieRating;
+    private Language MovieLanguage => Movie.MovieLanguage;
+    private string ImdbId => Movie.ImdbId;
+    private double ImdbRating => Movie.ImdbRating;
+}

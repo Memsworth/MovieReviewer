@@ -1,0 +1,74 @@
+@page "/movie/add/"
+@using MovieReviewer.Core.DTO.Inputs
+@using MovieReviewer.Service
+@using MovieReviewer.Service.Validation
+@inject MovieService MovieService
+@inject NavigationManager NavMan
+
+<PageTitle>Adding a new movie</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+    <MudText Typo="Typo.h4" Align="Align.Center">Add a New Movie</MudText>
+    <MudGrid>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="@_imdbId" Label="IMDB-Id" Class="mb-4" Required="true"
+                          RequiredError="Put a damn ID. You are an idiot" FullWidth="true"/>
+        </MudItem>
+        <MudItem xs="12" Class="text-center">
+            <MudButton Variant="Variant.Filled"
+                       Class="mb-4" Color="Color.Primary" OnClick="@(async () => await ClickHandler())">
+                Get
+            </MudButton>
+        </MudItem>
+    </MudGrid>
+
+    @if (_movie is not null)
+    {
+        <MudGrid>
+            <MudItem xs="12" sm="7">
+                <MudForm Model="@_movie" @ref="@_form"
+                         Validation="@(_createValidator.ValidateValue)"
+                         ValidationDelay="0">
+                    <MovieForm MovieInput="@_movie" />
+                    <MudPaper Class="pa-4 mt-4">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                                   DropShadow="false"
+                                   OnClick="@(async () => await Submit())">
+                            Submit
+                        </MudButton>
+                    </MudPaper>
+                </MudForm>
+            </MudItem>
+        </MudGrid>
+    }
+</MudContainer>
+
+@code {
+    private string _imdbId = string.Empty;
+    private CreateMovieInputModel? _movie;
+    private MudForm _form;
+    private readonly CreateMovieInputValidation _createValidator = new();
+    
+    
+    private async Task ClickHandler()
+    {
+        if (string.IsNullOrEmpty(_imdbId))
+            return;
+        //var httpResponse = await Http.GetAsync($"Movie/MovieInfo/{_imdbId}");
+        var operationResult = await MovieService.CreateMovieInfoAsync(_imdbId);
+        if (operationResult.IsSuccess)
+        {
+            _movie = operationResult.Value;
+        }
+    }
+    
+    private async Task Submit()
+    {
+        await _form.Validate();
+        if (_form.IsValid && _movie is not null)
+        {
+            await MovieService.CreateMovieAsync(_movie);
+            NavMan.NavigateTo("/");
+        }
+    }
+}

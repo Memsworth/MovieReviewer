@@ -16,8 +16,4 @@
     <ProjectReference Include="..\MovieReviewer.Service\MovieReviewer.Service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Services\" />
-  </ItemGroup>
-
 </Project>

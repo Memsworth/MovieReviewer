@@ -1,0 +1,31 @@
+@typeparam TMovieInputModel where TMovieInputModel : MovieInputModel
+@using MovieReviewer.Core.DTO.Inputs
+@using MovieReviewer.Core.Enums
+
+
+<MudPaper Class="pa-4">
+    <MudTextField @bind-Text="@MovieInput.Title" For="@(() => MovieInput.Title)" Label="Title"/>
+
+    <MudTextField @bind-Text="@MovieInput.Plot" For="@(() => MovieInput.Plot)" Label="Plot"/>
+
+    <MudSelect @bind-Value="@MovieInput.MovieLanguage" Label="Movie Language">
+        @foreach (var language in Enum.GetValues(typeof(Language)).Cast<Language>())
+        {
+            <MudSelectItem Value="@language">@language</MudSelectItem>
+        }
+    </MudSelect>
+
+    <MudSelect @bind-Value="@MovieInput.MovieRating" Label="Movie Language">
+        @foreach (var rating in Enum.GetValues(typeof(RatingSystem)).Cast<RatingSystem>())
+        {
+            <MudSelectItem Value="@rating">@rating</MudSelectItem>
+        }
+    </MudSelect>
+
+    <MudNumericField @bind-Value="@MovieInput.ImdbRating"
+                     For="@(() => MovieInput.ImdbRating)" Label="Imdb Rating" Min="1.0" Max="10.0"/>
+</MudPaper>
+
+@code {
+    [Parameter] [EditorRequired] public TMovieInputModel MovieInput { get; set; }
+}

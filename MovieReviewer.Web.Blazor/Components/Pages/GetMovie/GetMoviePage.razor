@@ -1,0 +1,37 @@
+@page "/movie/{id:int}"
+@using MovieReviewer.Core.DTO.Outputs
+@using MovieReviewer.Service
+@inject MovieService MovieService
+@inject ReviewService ReviewService
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4">
+    <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-4">Movie Details</MudText>
+
+    @if (_movie is not null)
+    {
+        <MovieDetail Movie="_movie"/>
+        <ReviewsList Reviews="_reviews"/>
+    }
+    else
+    {
+        <MudText Typo="Typo.body1" Align="Align.Center" Class="mt-4">Loading movie details...</MudText>
+    }
+</MudContainer>
+
+@code {
+    [Parameter, EditorRequired] public int id { get; set; }
+    private MovieViewDTO? _movie;
+    private IReadOnlyList<ReviewViewDTO>? _reviews = [];
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var movieResponse = await MovieService.GetMovieByIdAsync(id);
+        var reviewResponse = await ReviewService.GetReviewsByMovieId(id);
+        if (movieResponse.IsSuccess)
+        {
+            _movie = movieResponse.Value;
+            if (reviewResponse != null && reviewResponse.Any())
+                _reviews = reviewResponse;
+        }
+    }
+}
