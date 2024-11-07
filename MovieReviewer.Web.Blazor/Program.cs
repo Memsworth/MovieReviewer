@@ -1,3 +1,4 @@
+using Auth0.AspNetCore.Authentication;
 using MovieReviewer.Core.Infrastructure;
 using MovieReviewer.Core.Infrastructure.Repositories;
 using MovieReviewer.Core.Interfaces;
@@ -15,6 +16,15 @@ builder.Services.AddScoped<IMovieClient, OmDbClient>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.Configure<Settings>(builder.Configuration.GetSection(nameof(Settings)));
 
+
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
+    options.Domain = builder.Configuration["Auth0:Domain"];
+    options.ClientId = builder.Configuration["Auth0:ClientId"];
+});
+
+builder.Services.AddRazorPages();
+builder.Services.AddCascadingAuthenticationState();
 // Add MudBlazor services
 builder.Services.AddMudServices();
 
@@ -35,8 +45,15 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+app.UseRouting();
+
 app.UseAntiforgery();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapRazorPages();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

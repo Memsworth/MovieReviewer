@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieReviewer.Api", "MovieR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieReviewer.Core", "MovieReviewer.Core\MovieReviewer.Core.csproj", "{11AC1848-05B6-43FB-B4F2-2CDC49E60016}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Web.Blazor", "MovieReviewer.Web.Blazor\MovieReviewer.Web.Blazor.csproj", "{CAAED3D1-4C42-4F95-B8BA-768FC200793C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieReviewer.Web.Blazor", "MovieReviewer.Web.Blazor\MovieReviewer.Web.Blazor.csproj", "{CAAED3D1-4C42-4F95-B8BA-768FC200793C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Service", "MovieReviewer.Service\MovieReviewer.Service.csproj", "{2B56D103-611E-4909-B02D-AE1173C03073}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieReviewer.Service", "MovieReviewer.Service\MovieReviewer.Service.csproj", "{2B56D103-611E-4909-B02D-AE1173C03073}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
