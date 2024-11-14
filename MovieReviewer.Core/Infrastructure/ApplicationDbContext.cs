@@ -14,6 +14,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Review> Reviews { get; set; }
+    public DbSet<User> Users { get; set; }
     public required string DbPath { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

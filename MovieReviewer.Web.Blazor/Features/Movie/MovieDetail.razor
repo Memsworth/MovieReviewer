@@ -1,0 +1,15 @@
+@using MovieReviewer.Core.DTO.Outputs
+@using MovieReviewer.Web.Blazor.Features.Home
+
+<MudCard Class="mb-4">
+    <MudCardMedia Image="https://via.placeholder.com/300x450" Alt="@Movie?.Title"/>
+    <MudCardContent>
+        <MudGrid>
+            <MovieInfo Movie="Movie"/>
+        </MudGrid>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] [EditorRequired] public MovieViewDTO? Movie { get; set; }
+}

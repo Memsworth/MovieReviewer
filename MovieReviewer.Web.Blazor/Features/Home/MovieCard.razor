@@ -1,0 +1,26 @@
+@using MovieReviewer.Core.DTO.Outputs
+@inject NavigationManager NavMan
+<MudCard>
+    <MudCardMedia Image="https://via.placeholder.com/150" Alt="@Movie.Title"/>
+    <MudCardContent>
+        <MudGrid>
+            <MovieInfo Movie="Movie"/>
+        </MudGrid>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Text"
+                   Color="Color.Primary"
+                   OnClick="@(() => LearnMoreClicked())">
+            Learn More
+        </MudButton>
+    </MudCardActions>
+</MudCard>
+
+@code {
+    [Parameter, EditorRequired] public required MovieViewDTO Movie { get; set; }
+
+    private void LearnMoreClicked()
+    {
+        NavMan.NavigateTo($"/movie/{Movie.Id}");
+    }
+}

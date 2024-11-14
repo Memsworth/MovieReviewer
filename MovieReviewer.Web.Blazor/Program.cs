@@ -3,7 +3,7 @@ using MovieReviewer.Core.Infrastructure;
 using MovieReviewer.Core.Infrastructure.Repositories;
 using MovieReviewer.Core.Interfaces;
 using MovieReviewer.Service;
-using MovieReviewer.Web.Blazor.Components;
+using MovieReviewer.Web.Blazor.Features;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);

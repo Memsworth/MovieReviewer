@@ -16,4 +16,20 @@
   <ItemGroup>
     <ProjectReference Include="..\MovieReviewer.Service\MovieReviewer.Service.csproj" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor" />
+    <_ContentIncludedByDefault Remove="Components\Layout\NavMenu.razor" />
+    <_ContentIncludedByDefault Remove="Components\Pages\Home\HomePage.razor" />
+    <_ContentIncludedByDefault Remove="Components\Pages\Home\MovieCard.razor" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <AdditionalFiles Include="Features\Home\HomePage.razor" />
+    <AdditionalFiles Include="Features\Home\MovieCard.razor" />
+    <AdditionalFiles Include="Features\Layout\MainLayout.razor" />
+    <AdditionalFiles Include="Features\Layout\NavMenu.razor" />
+  </ItemGroup>
 </Project>
