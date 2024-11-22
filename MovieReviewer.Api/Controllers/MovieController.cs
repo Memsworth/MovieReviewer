@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Ardalis.Result;
 using Microsoft.AspNetCore.Mvc;
-using MovieReviewer.Core.DTO.Inputs;
-using MovieReviewer.Service;
-using MovieReviewer.Service.Validation;
+using MovieReviewer.Api.Services;
+using MovieReviewer.Shared.Dto.Input;
 
 namespace MovieReviewer.Api.Controllers
 {
@@ -11,8 +10,8 @@ namespace MovieReviewer.Api.Controllers
     [Route("[controller]")]
     public class MovieController(MovieService movieService) : ControllerBase
     {
-        private readonly UpdateMovieInputValidation _updateValidator = new();
-        private readonly CreateMovieInputValidation _createValidator = new();
+        //private readonly UpdateMovieInputValidation _updateValidator = new();
+        //private readonly CreateMovieInputValidation _createValidator = new();
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMovieByIdAsync([Required] int id)
@@ -25,30 +24,30 @@ namespace MovieReviewer.Api.Controllers
             return NotFound();
         }
 
-        [HttpGet("MovieInfo/{imdbId}")]
+        [HttpGet("movieInfo/{imdbId}")]
         public async Task<IActionResult> GetMovieInfoAsync([Required] string imdbId)
         {
             //here is IMDBId
-            var result = await movieService.CreateMovieInfoAsync(imdbId);
+            var result = await movieService.GetMovieInfoFromApiAsync(imdbId);
             
             //TODO: change this a bit
             return result.IsSuccess ? Ok(result.Value) : NotFound();
         }
         [HttpGet]
-        public async Task<IActionResult> GetMovies()
+        public IActionResult GetMovies()
         {
-            var movies = await movieService.GetAllMoviesAsync();
+            var movies = movieService.GetAllMoviesAsync();
             return Ok(movies);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMovie(CreateMovieInputModel createMovie)
+        public async Task<IActionResult> CreateMovie(CreateMovieDto movieDto)
         {
-            var validationResult = await _createValidator.ValidateAsync(createMovie);
+            /*var validationResult = await _createValidator.ValidateAsync(createMovie);
             if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors);
+                return BadRequest(validationResult.Errors);*/
             
-            var result = await movieService.CreateMovieAsync(createMovie);
+            var result = await movieService.CreateMovieAsync(movieDto);
 
             if (result.IsSuccess)
                 return Ok(result.Value);
@@ -77,11 +76,11 @@ namespace MovieReviewer.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMovie([Required] int id, [FromBody] UpdateMovieInputModel movieUpdate)
+        public async Task<IActionResult> UpdateMovie([Required] int id, [FromBody] UpdateMovieDto movieUpdate)
         {
-            var validationResult = await _updateValidator.ValidateAsync(movieUpdate);
+            /*var validationResult = await _updateValidator.ValidateAsync(movieUpdate);
             if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors);
+                return BadRequest(validationResult.Errors);*/
 
             var result = await movieService.UpdateMovieAsync(id, movieUpdate);
 

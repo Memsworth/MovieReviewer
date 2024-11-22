@@ -1,7 +1,7 @@
 /*using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MovieReviewer.Api.Control.Repository;
-using MovieReviewer.Core.View;
+using MovieReviewer.Domain.View;
 
 namespace MovieReviewer.Api.Boundary
 {

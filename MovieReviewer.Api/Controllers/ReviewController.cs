@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*using System.ComponentModel.DataAnnotations;
 using Ardalis.Result;
 using Microsoft.AspNetCore.Mvc;
 using MovieReviewer.Core.DTO.Inputs;
@@ -82,4 +82,4 @@ namespace MovieReviewer.Api.Controllers
             return NoContent();
         }
     }
-}
+}*/

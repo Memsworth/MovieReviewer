@@ -1,23 +1,21 @@
+using MovieReviewer.Api.Services;
 using MovieReviewer.Api.Utilities;
-using MovieReviewer.Core.Infrastructure;
-using MovieReviewer.Core.Infrastructure.Repositories;
-using MovieReviewer.Core.Interfaces;
+using MovieReviewer.Data;
+using MovieReviewer.Data.Repositories;
 using MovieReviewer.Service;
+using MovieReviewer.Shared.Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<MovieRepository>();
-builder.Services.AddScoped<MovieService>();
-builder.Services.AddScoped<ReviewRepository>();
-builder.Services.AddScoped<ReviewService>();
-//builder.Services.AddScoped<AuthRepository>();
-//builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<IMovieRepository,MovieRepository>();
 builder.Services.AddScoped<IMovieClient, OmDbClient>();
+
+builder.Services.AddScoped<MovieService>();
+builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.Configure<Settings>(builder.Configuration.GetSection(nameof(Settings)));
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection(nameof(JwtConfig)));
-builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddControllers();
 
 /*builder.Services.AddIdentity<ApiUser, IdentityRole>()

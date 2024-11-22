@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using MovieReviewer.Api.Utilities;
-using MovieReviewer.Core.Infrastructure;
+using MovieReviewer.Domain.Infrastructure;
 
 namespace MovieReviewer.Api.Features.Auth;
 
