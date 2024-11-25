@@ -1,0 +1,38 @@
+﻿@page "/test"
+@using MovieReviewer.Shared.Dto.Output
+@using MovieReviewer.Web.Services
+@inject HomePageService Service
+
+
+<PageTitle>TestingPage</PageTitle>
+@if (_movies is null || _movies.Count == 0)
+{
+    <p>Loading.....</p>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var movie in _movies)
+            {
+                <div class="col-sm-3">
+                    <Card Class="mb-4">
+                        <CardBody>
+                            <CardTitle>Title: @movie.Title</CardTitle>
+                            <CardText>Plot: @movie.Plot</CardText>
+                        </CardBody>
+                        <CardFooter Class="text-muted">Rating: @movie.ImdbRating</CardFooter>
+                    </Card>
+                </div>
+            }
+        </div>
+    </div>
+}
+@code {
+    private IReadOnlyList<MovieViewDto> _movies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _movies = await Service.FetchMovies();
+    }
+}

@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Ardalis.Result;
+using FluentValidation;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MovieReviewer.Api.Services;
 using MovieReviewer.Shared.Dto.Input;
@@ -7,11 +9,10 @@ using MovieReviewer.Shared.Dto.Input;
 namespace MovieReviewer.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class MovieController(MovieService movieService) : ControllerBase
+    [Route("api/[controller]")]
+    public class MovieController(MovieService movieService,
+        IValidator<CreateMovieDto> createValidator, IValidator<UpdateMovieDto> updateValidator) : ControllerBase
     {
-        //private readonly UpdateMovieInputValidation _updateValidator = new();
-        //private readonly CreateMovieInputValidation _createValidator = new();
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMovieByIdAsync([Required] int id)
@@ -43,9 +44,9 @@ namespace MovieReviewer.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMovie(CreateMovieDto movieDto)
         {
-            /*var validationResult = await _createValidator.ValidateAsync(createMovie);
+            var validationResult = await createValidator.ValidateAsync(movieDto);
             if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors);*/
+                return BadRequest(validationResult.Errors);
             
             var result = await movieService.CreateMovieAsync(movieDto);
 
@@ -78,9 +79,9 @@ namespace MovieReviewer.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMovie([Required] int id, [FromBody] UpdateMovieDto movieUpdate)
         {
-            /*var validationResult = await _updateValidator.ValidateAsync(movieUpdate);
+            var validationResult = await updateValidator.ValidateAsync(movieUpdate);
             if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors);*/
+                return BadRequest(validationResult.Errors);
 
             var result = await movieService.UpdateMovieAsync(id, movieUpdate);
 

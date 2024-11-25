@@ -1,9 +1,13 @@
+using System.Text.Json;
+using FluentValidation;
 using MovieReviewer.Api.Services;
 using MovieReviewer.Api.Utilities;
 using MovieReviewer.Data;
 using MovieReviewer.Data.Repositories;
 using MovieReviewer.Service;
+using MovieReviewer.Service.Validation;
 using MovieReviewer.Shared.Domain.Interfaces;
+using MovieReviewer.Shared.Dto.Input;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +20,18 @@ builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.Configure<Settings>(builder.Configuration.GetSection(nameof(Settings)));
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection(nameof(JwtConfig)));
-builder.Services.AddControllers();
+
+builder.Services.AddScoped<IValidator<CreateMovieDto>, CreateMovieDtoValidation>();
+builder.Services.AddScoped<IValidator<UpdateMovieDto>, UpdateMovieDtoValidation>();
+builder.Services.AddControllers().AddJsonOptions(options => 
+    options.JsonSerializerOptions.PropertyNamingPolicy = null);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("apiKey", builder => 
+        builder.WithOrigins("https://localhost:7011")
+        .AllowAnyMethod()
+        .AllowAnyHeader());
+});
 
 /*builder.Services.AddIdentity<ApiUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();*/
@@ -57,7 +72,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors();
+app.UseCors("apiKey");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
