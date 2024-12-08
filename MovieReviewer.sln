@@ -5,11 +5,11 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieReviewer.Api", "MovieReviewer.Api\MovieReviewer.Api.csproj", "{42085FD6-8482-4032-A593-C6E50A850A5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Web", "MovieReviewer.Web\MovieReviewer.Web.csproj", "{C00BDBDE-5E74-4B91-B80A-AF50B426318C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Data", "MovieReviewer.Data\MovieReviewer.Data.csproj", "{8551426B-41D1-4A45-965D-93A541E5DBF8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Shared", "MovieReviewer.Shared\MovieReviewer.Shared.csproj", "{C50E8868-9F90-4CBE-A9B7-18B0EC398FA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Web.Blazor", "MovieReviewer.Web.Blazor\MovieReviewer.Web.Blazor.csproj", "{87AE226D-791E-463D-A41A-8D86D43B2329}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{42085FD6-8482-4032-A593-C6E50A850A5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42085FD6-8482-4032-A593-C6E50A850A5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42085FD6-8482-4032-A593-C6E50A850A5E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C00BDBDE-5E74-4B91-B80A-AF50B426318C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C00BDBDE-5E74-4B91-B80A-AF50B426318C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C00BDBDE-5E74-4B91-B80A-AF50B426318C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C00BDBDE-5E74-4B91-B80A-AF50B426318C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8551426B-41D1-4A45-965D-93A541E5DBF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8551426B-41D1-4A45-965D-93A541E5DBF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8551426B-41D1-4A45-965D-93A541E5DBF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{C50E8868-9F90-4CBE-A9B7-18B0EC398FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C50E8868-9F90-4CBE-A9B7-18B0EC398FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C50E8868-9F90-4CBE-A9B7-18B0EC398FA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87AE226D-791E-463D-A41A-8D86D43B2329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87AE226D-791E-463D-A41A-8D86D43B2329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87AE226D-791E-463D-A41A-8D86D43B2329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87AE226D-791E-463D-A41A-8D86D43B2329}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

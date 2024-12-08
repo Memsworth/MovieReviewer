@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.Result" Version="10.1.0" />
+    <PackageReference Include="Blazor.Bootstrap" Version="3.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor" />
+    <_ContentIncludedByDefault Remove="Components\Layout\NavMenu.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Features\Layout\MainLayout.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MovieReviewer.Data\MovieReviewer.Data.csproj" />
+  </ItemGroup>
+
+</Project>
