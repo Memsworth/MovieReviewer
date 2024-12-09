@@ -1,8 +1,7 @@
-using System.Net.Http.Headers;
-using Microsoft.Extensions.Options;
 using MovieReviewer.Data;
 using MovieReviewer.Data.Repositories;
 using MovieReviewer.Shared.Domain.Interfaces;
+using MovieReviewer.Shared.Service;
 using MovieReviewer.Web.Blazor.Features;
 using MovieReviewer.Web.Blazor.Services;
 
@@ -15,17 +14,15 @@ builder.Services.AddRazorComponents()
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IMovieClient, MovieClient>();
+builder.Services.AddScoped<IMovieService, MovieService>();
 
 builder.Services.Configure<TmDb>(builder.Configuration.GetSection(nameof(TmDb)));
+
 builder.Services.AddHttpClient("TmDb",
-    (serviceProvider, httpClient) =>
+    httpClient =>
     {
-        var options = serviceProvider.GetRequiredService<IOptions<TmDb>>().Value;
-        httpClient.BaseAddress = new Uri("https://api.themoviedb.org/3/");
+        httpClient.BaseAddress = new Uri("https://www.omdbapi.com/");
         httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-        httpClient.DefaultRequestHeaders.Authorization = 
-            new AuthenticationHeaderValue("Bearer", options.TmDbApiKey );
-        
     });
 var app = builder.Build();
 

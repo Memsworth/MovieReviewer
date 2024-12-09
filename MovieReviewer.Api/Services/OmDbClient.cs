@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
+using MovieReviewer.Service;
 using MovieReviewer.Shared.Domain.Interfaces;
 using Newtonsoft.Json;
 
-namespace MovieReviewer.Service
+namespace MovieReviewer.Api.Services
 {
     public class OmDbClient : IMovieClient
     {

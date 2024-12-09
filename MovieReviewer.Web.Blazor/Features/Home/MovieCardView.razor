@@ -1,0 +1,19 @@
+@using MovieReviewer.Shared.Dto.Output
+
+<Card>
+    <CardBody>
+        <CardTitle>@Movie.Title</CardTitle>
+    </CardBody>
+    <CardBody>
+        <CardText>@Movie.Plot</CardText>
+    </CardBody>
+    <CardBody>
+        <CardLink To="#">Edit</CardLink>
+        <CardLink To="#">Delete</CardLink>
+    </CardBody>
+</Card>
+
+@code {
+    [Parameter, EditorRequired]
+    public MovieViewDto Movie { get; set; }
+}

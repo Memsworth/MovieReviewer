@@ -1,6 +1,35 @@
 @page "/"
-<h3>HomePage</h3>
+@using MovieReviewer.Shared.Dto.Output
+@using MovieReviewer.Shared.Service
+@inject IMovieService MovieService
+
+<PageTitle>Home Page</PageTitle>
+
+@if (_movies.Count == 0)
+{
+    <H3>Loading...</H3>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var movie in _movies)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <MovieCardView Movie="@movie"/>
+                </div>
+            }
+        </div>
+    </div>
+}
+
 
 @code {
-    
+    private IReadOnlyList<MovieViewDto> _movies;
+
+    protected override void OnInitialized()
+    {
+        _movies = MovieService.GetAllMoviesAsync();
+    }
+
 }
