@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Data", "Movie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Shared", "MovieReviewer.Shared\MovieReviewer.Shared.csproj", "{C50E8868-9F90-4CBE-A9B7-18B0EC398FA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Web.Blazor", "MovieReviewer.Web.Blazor\MovieReviewer.Web.Blazor.csproj", "{87AE226D-791E-463D-A41A-8D86D43B2329}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReviewer.Web.Blazor", "MovieReviewer.Web.Blazor\MovieReviewer.Web.Blazor.csproj", "{80C48D70-DACD-4402-8651-6E791601C910}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{C50E8868-9F90-4CBE-A9B7-18B0EC398FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C50E8868-9F90-4CBE-A9B7-18B0EC398FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C50E8868-9F90-4CBE-A9B7-18B0EC398FA7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87AE226D-791E-463D-A41A-8D86D43B2329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87AE226D-791E-463D-A41A-8D86D43B2329}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87AE226D-791E-463D-A41A-8D86D43B2329}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87AE226D-791E-463D-A41A-8D86D43B2329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80C48D70-DACD-4402-8651-6E791601C910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80C48D70-DACD-4402-8651-6E791601C910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80C48D70-DACD-4402-8651-6E791601C910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80C48D70-DACD-4402-8651-6E791601C910}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

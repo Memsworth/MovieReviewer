@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MovieReviewer.Shared.Domain.Entities;
 
 namespace MovieReviewer.Data;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext()
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
         var folder = Environment.SpecialFolder.MyDocuments;
         var dbPath = Environment.GetFolderPath(folder);
@@ -28,10 +26,4 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         base.OnModelCreating(modelBuilder);
     }
-}
-
-public class ApplicationUser : IdentityUser
-{
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
 }
