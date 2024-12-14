@@ -1,0 +1,39 @@
+﻿@page "/register"
+@using System.ComponentModel.DataAnnotations
+@using MovieReviewer.Web.Blazor.Models
+@using MovieReviewer.Web.Blazor.Services
+@inject NavigationManager NavMan
+@inject AuthService AuthService 
+<PageTitle>Register User</PageTitle>
+
+<!-- change FormName to match the endpoint I am going to use for the controller -->
+<FluentEditForm Model="@registerData" FormName="registering_users">
+    <DataAnnotationsValidator />
+    <div>
+        <FluentTextField Label="First Name" Required @bind-Value="@registerData.FirstName" />
+        <ValidationMessage For="@(() => registerData.FirstName)" />
+        <FluentTextField Label="Last Name" Required @bind-Value="@registerData.LastName" />
+        <ValidationMessage For="@(() => registerData.LastName)" />
+        <FluentTextField Label="Email" Required @bind-Value="@registerData.Email" />
+        <ValidationMessage For="@(() => registerData.Email)" />
+        <FluentTextField Label="Password" Required @bind-Value="@registerData.Password" TextFieldType="TextFieldType.Password" />
+        <ValidationMessage For="@(() => registerData.Password)" />
+    </div>
+</FluentEditForm>
+
+
+@code {
+    [SupplyParameterFromForm]
+    private RegisterModel registerData { get; set; } = new();
+
+    private async Task DoSomething()
+    {
+        var result = await AuthService.RegisterAsync(registerData);
+
+        if (!result.IsSuccess)
+        {
+            //cause an error here or something
+        }
+        NavMan.NavigateTo("/", forceLoad: true);
+    }
+}

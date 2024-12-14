@@ -1,0 +1,14 @@
+﻿@page "/"
+@using MovieReviewer.Shared.Dto.Output
+@using MovieReviewer.Shared.Service
+@inject IMovieService MovieService
+<PageTitle>Home Page</PageTitle>
+
+@code {
+    private IReadOnlyList<MovieViewDto> _movies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _movies = MovieService.GetAllMoviesAsync();
+    }
+}

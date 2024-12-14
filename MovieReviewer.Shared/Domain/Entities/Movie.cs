@@ -12,5 +12,5 @@ public class Movie : BaseEntity
     public required double ImdbRating { get; set; }
     public DateTime LastUpdatedAt { get; set; }
     public bool IsDisabled { get; set; }
-    public virtual ICollection<Review> Reviews { get; set; }
+    public virtual ICollection<Review> Reviews { get; set; } = [];
 }

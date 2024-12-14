@@ -15,15 +15,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Review> Reviews { get; set; }
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<ApplicationUser> Users { get; set; }
     public required string DbPath { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite($"Data Source={DbPath}");
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
     }
 }
