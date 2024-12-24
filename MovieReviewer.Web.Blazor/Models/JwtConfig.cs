@@ -1,4 +1,4 @@
-﻿namespace MovieReviewer.Web.Blazor.Services
+﻿namespace MovieReviewer.Web.Blazor.Models
 {
     public class JwtConfig
     {

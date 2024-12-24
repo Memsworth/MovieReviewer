@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MovieReviewer.Web.Blazor.Models
+namespace MovieReviewer.Shared.Dto.Input
 {
     public class LoginModel
     {

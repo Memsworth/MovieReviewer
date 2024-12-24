@@ -1,15 +1,17 @@
 ﻿@page "/login"
 @using System.ComponentModel.DataAnnotations
+@using MovieReviewer.Shared.Dto.Input
+@using MovieReviewer.Shared.Service
 @using MovieReviewer.Web.Blazor.Models
 @using MovieReviewer.Web.Blazor.Services
 @inject NavigationManager NavMan
-@inject AuthService AuthService
+@inject IAuthService AuthService
 
 <PageTitle>User Login</PageTitle>
 <h2>Logging the user in</h2>
 
 <!-- change FormName to match the endpoint I am going to use for the controller -->
-<FluentEditForm Model="@loginData" FormName="logging_users" OnValidSubmit="DoSomething">
+<EditForm Model="@loginData" FormName="logging_users" OnValidSubmit="DoSomething">
     <DataAnnotationsValidator />
     <div>
         <FluentTextField Label="Email" Required @bind-Value="@loginData.Email"/>
@@ -17,10 +19,12 @@
         <FluentTextField Label="Password" Required @bind-Value="@loginData.Password" TextFieldType="TextFieldType.Password"/>
         <ValidationMessage For="@(() => loginData.Password)"/>
     </div>
-</FluentEditForm>
+    <div>
+        <FluentButton Type="ButtonType.Submit">Submit</FluentButton>
+    </div>
+</EditForm>
 @code {
     private LoginModel loginData { get; set; } = new();
-
 
     public async void DoSomething()
     {

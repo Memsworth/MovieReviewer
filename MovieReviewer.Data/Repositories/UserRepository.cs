@@ -4,7 +4,7 @@ using MovieReviewer.Shared.Domain.Interfaces;
 
 namespace MovieReviewer.Data.Repositories
 {
-    public class UserRepository(ApplicationDbContext context) : IGenericRepository<ApplicationUser>
+    public class UserRepository(ApplicationDbContext context) : IUserRepository
     {
         public async Task Add(ApplicationUser entity)
         {
@@ -18,21 +18,20 @@ namespace MovieReviewer.Data.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task<bool> Exists(int id)
-        {
-            return await context.Users.AnyAsync(x => x.Id == id);
-        }
+        public async Task<bool> ExistByEmail(string email) =>
+            await context.Users.AnyAsync(x => x.Email == email);
+
+        public async Task<bool> Exists(int id) =>
+            await context.Users.AnyAsync(x => x.Id == id);
 
         //TODO: do something here. Make it a query
-        public IEnumerable<ApplicationUser> GetAll()
-        {
-            return context.Users;
-        }
+        public IEnumerable<ApplicationUser> GetAll() => context.Users;
 
-        public async Task<ApplicationUser?> GetById(int id)
-        {
-            return context.Users.FirstOrDefault(x => x.Id == id);
-        }
+        public async Task<ApplicationUser?> GetById(int id) =>
+             await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task<ApplicationUser?> GetUserByEmail(string email) =>
+            await context.Users.FirstOrDefaultAsync(x => x.Email == email);
 
         public async Task Update(ApplicationUser entity)
         {

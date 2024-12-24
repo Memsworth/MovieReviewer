@@ -1,14 +1,16 @@
-﻿@page "/"
+﻿@page "/Testtest"
+@using Microsoft.AspNetCore.Components.Authorization
 @using MovieReviewer.Shared.Dto.Output
 @using MovieReviewer.Shared.Service
-@inject IMovieService MovieService
-<PageTitle>Home Page</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        <p>ImporiumGuy was work here</p>
+    </Authorized>
+    <NotAuthorized>
+        Fool
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
-    private IReadOnlyList<MovieViewDto> _movies;
-
-    protected override async Task OnInitializedAsync()
-    {
-        _movies = MovieService.GetAllMoviesAsync();
-    }
 }

@@ -1,15 +1,12 @@
 ﻿using Ardalis.Result;
 using MovieReviewer.Shared.Domain.Entities;
-using MovieReviewer.Web.Blazor.Models;
-using BC = BCrypt.Net.BCrypt;
+using MovieReviewer.Shared.Dto.Input;
 
-namespace MovieReviewer.Web.Blazor.Services
+namespace MovieReviewer.Shared.Service
 {
     public interface IUserService
     {
         public Task<Result<ApplicationUser>> GetUserByEmail(string email);
-        public Task<bool> UserExists(string email);
-        public bool VerifyPassword(string password, string storedPassword);
         public Task<Result> RegisterUser(RegisterModel entity);
     }
 }

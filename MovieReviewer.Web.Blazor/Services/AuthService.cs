@@ -1,44 +1,40 @@
 ﻿using Ardalis.Result;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using MovieReviewer.Shared.Domain.Entities;
+using MovieReviewer.Shared.Domain.Interfaces;
+using MovieReviewer.Shared.Dto.Input;
+using MovieReviewer.Shared.Service;
 using MovieReviewer.Web.Blazor.Models;
 using System.Collections.Concurrent;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using BC = BCrypt.Net.BCrypt;
+
 
 namespace MovieReviewer.Web.Blazor.Services
 {
-    public class AuthService(IOptions<JwtConfig> options, IUserService userService) : IAuthService
+    public class AuthService(IOptions<JwtConfig> options, IUserRepository userRepository) : IAuthService
     {
         public static ConcurrentQueue<string> WebLoginQueue { get; set; } = new();
 
-        public async Task<Result> RegisterAsync(RegisterModel registerData)
-        {
-            var userExists = await userService.UserExists(registerData.Email);
-            if (userExists)
-                return Result.Error();
-
-            var result = await userService.RegisterUser(registerData);
-            return result.IsSuccess ? Result.Success() : Result.Error();
-        }
         public async Task<Result<string>> LoginAsync(LoginModel loginData)
         {
-            var user = await userService.GetUserByEmail(loginData.Email);
-            if (!user.IsSuccess)
+            var user = await userRepository.GetUserByEmail(loginData.Email);
+            if (user is null)
                 return Result.Error();
 
-            var isPassword = userService.VerifyPassword(loginData.Password, user.Value.Password);
+            var isPassword = BC.Verify(loginData.Password, user.Password);
             if (!isPassword)
                 return Result.Error();
 
-            var generatedToken = GenerateToken(user.Value);
+            var generatedToken = GenerateToken(user);
 
             WebLoginQueue.Enqueue(generatedToken);
             return Result.Success(generatedToken);
         }
-        public string GenerateToken(ApplicationUser user)
+        private string GenerateToken(ApplicationUser user)
         {
             var claims = new List<Claim>()
             {
@@ -52,16 +48,17 @@ namespace MovieReviewer.Web.Blazor.Services
         private string BuildToken(IEnumerable<Claim> claims)
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Value.Key));
-            var signingCred = new SigningCredentials(secretKey, SecurityAlgorithms.Sha256);
+            var signingCred = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
             var issuer = options.Value.Issuer;
-            var tokenDescriptor = new JwtSecurityToken(
-                issuer: options.Value.Issuer,
-                audience: options.Value.Audience,
-                claims: claims,
-                expires: DateTime.UtcNow.AddDays(1),
-                signingCredentials: signingCred
-                );
-            return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+            var tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Issuer = options.Value.Issuer,
+                Audience = options.Value.Audience,
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials = signingCred,
+                Subject = new ClaimsIdentity(claims)
+            };
+            return new JsonWebTokenHandler().CreateToken(tokenDescriptor);
         }
         
     }

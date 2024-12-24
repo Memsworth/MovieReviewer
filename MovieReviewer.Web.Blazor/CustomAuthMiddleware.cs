@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.IdentityModel.JsonWebTokens;
 using MovieReviewer.Web.Blazor.Services;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace MovieReviewer.Web.Blazor
@@ -13,26 +12,34 @@ namespace MovieReviewer.Web.Blazor
         {
             if(httpContext.Request.Path.StartsWithSegments("/cookie-login"))
             {
-                var token = httpContext.Request.Query["token"];
+                var token = httpContext.Request.Query["token"].ToString();
+                AuthService.WebLoginQueue.TryDequeue(out string? loginToken);
 
-                if (!string.IsNullOrEmpty(token) || 
-                    !AuthService.WebLoginQueue.TryDequeue(out string? webLoginToken) ||
-                    webLoginToken != token)
+                if (loginToken is null)
                 {
+                    Console.WriteLine("loginToken is null");
+                    httpContext.Response.Redirect("/");
+                    return;
+                }
+                if (string.IsNullOrEmpty(token) ||
+                    loginToken != token)
+                {
+                    Console.WriteLine("Can't read 1");
                     httpContext.Response.Redirect("/");
                     return;
                 }
 
-                var tokenHandler = new JwtSecurityTokenHandler();
+                var tokenHandler = new JsonWebTokenHandler();
                 if (!tokenHandler.CanReadToken(token))
                 {
+                    Console.WriteLine("Can't read 2");
                     httpContext.Response.Redirect("/");
                     return;
                 }
 
-                var claims = tokenHandler.ReadJwtToken(token).Claims;
-                var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
-                await httpContext.SignInAsync(scheme: CookieAuthenticationDefaults.AuthenticationScheme,
+                var claims = tokenHandler.ReadJsonWebToken(token).Claims;
+                var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
+                await httpContext.SignInAsync(
                     principal: claimsPrincipal,
                     properties: new AuthenticationProperties
                     {
@@ -45,16 +52,13 @@ namespace MovieReviewer.Web.Blazor
                 httpContext.Response.Redirect("/");
                 return;
             }
-            else if(httpContext.Request.Path.StartsWithSegments("/cookie-logout"))
+            if(httpContext.Request.Path.StartsWithSegments("/cookie-logout"))
             {
                 await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                 httpContext.Response.Redirect("/");
                 return;
             }
-            else
-            {
-                await next(httpContext);
-            }
+            await next(httpContext);
         }
     }
 
